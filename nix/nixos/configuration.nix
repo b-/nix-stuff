@@ -110,9 +110,10 @@
 
   # NOT WORKING
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "1password"
+    "1password-cli"
+    "discord"
     "google-chrome"
-    "_1password-gui-beta"
-    "_1password-cli"
     "vscode"
   ];
 
