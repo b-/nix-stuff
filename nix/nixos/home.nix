@@ -78,6 +78,9 @@
     zstd
     gnupg
 
+    # programming
+    gh
+
     # internet
     discord
     keybase
