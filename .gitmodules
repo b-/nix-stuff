@@ -1,0 +1,6 @@
+[submodule "fonts/PragmataPro0829"]
+	path = fonts/PragmataPro0829
+	url = git@github.com:b-/PragmataPro0829
+[submodule "fonts/BerkeleyMono1009"]
+	path = fonts/BerkeleyMono1009
+	url = git@github.com:b-/BerkeleyMono1009
