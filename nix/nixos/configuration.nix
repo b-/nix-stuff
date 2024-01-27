@@ -105,16 +105,16 @@
 
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfree = true;
   # Enable the unfree 1Password packages
 
   # NOT WORKING
-  # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-  #   "google-chrome"
-  #   "1password"
-  #   "1password-cli"
-  #   "vscode"
-  # ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "google-chrome"
+    "_1password-gui-beta"
+    "_1password-cli"
+    "vscode"
+  ];
 
 
   programs._1password.enable = true;
