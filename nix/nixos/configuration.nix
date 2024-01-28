@@ -104,11 +104,7 @@
   programs.fish.enable = true;
 
 
-  # Allow unfree packages
-  #nixpkgs.config.allowUnfree = true;
-  # Enable the unfree 1Password packages
-
-  # NOT WORKING
+  # Enable select unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password"
     "1password-cli"

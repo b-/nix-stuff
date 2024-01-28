@@ -1,4 +1,4 @@
-{ pkgs, ...}: {
+{ pkgs, ... }: {
 
   ##########################################################################
   #
@@ -7,7 +7,6 @@
   #  NOTE: Your can find all available options in:
   #    https://daiderd.com/nix-darwin/manual/index.html
   #
-  # TODO Fell free to modify this file to fit your needs.
   #
   ##########################################################################
 
@@ -42,47 +41,41 @@
     # `brew install`
     # TODO Feel free to add your favorite apps here.
     brews = [
-      "aria2"  # download tool
+      "aria2" # download tool
       "atuin"
+      "autojump"
       "bash"
       "bat"
-      # "ca-certificates"
       "direnv"
-      # "gettext"
       "just"
       "kubernetes-cli"
-      # "libgit2"
-      # "libssh2"
-      # "libtermkey"
-      # "libuv"
-      # "libvterm"
-      # "luajit"
-      # "luv"
-      # "mpdecimal"
-      # "msgpack"
       "neovim"
-      # "nixpacks"
-      # "oniguruma"
-      # "openssl@3"
-      # "python@3.12"
-      # "readline"
-      # "six"
-      # "sqlite"
       "starship"
       "stow"
       "thefuck"
       "tree-sitter"
-      # "unibilium"
-      # "xz"
     ];
 
     # `brew install --cask`
     # TODO Feel free to add your favorite apps here.
     casks = [
-      # "google-chrome"
+      "1password"
       "1password-cli"
-      "iterm2"
       "discord"
+      "google-chrome"
+      "iterm2"
+      "jetbrains-toolbox"
+      "microsoft-office"
+      "visual-studio-code"
     ];
+    masApps = {
+      "1Password for Safari" = 1569813296;
+      "Ghostery" = 1436953057;
+      "Ivory" = 6444602274;
+      "Jump Desktop" = 524141863;
+      "Prompt" = 1594420480;
+      "Refined GitHub" = 1519867270;
+      "TestFlight" = 899247664;
+    };
   };
 }

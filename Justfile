@@ -12,7 +12,8 @@ nixos-rebuild:
 	sudo nixos-rebuild switch
 
 darwin-deploy:
-	nix build nix/darwin#darwinConfigurations.bri-macbook.system \
-	   --extra-experimental-features "nix-command flakes"
+	cd nix/darwin && make deploy
+	# nix build nix/darwin#darwinConfigurations.bri-macbook.system \
+	#    --extra-experimental-features "nix-command flakes"
 
-	./result/sw/bin/darwin-rebuild switch --flake nix/darwin#bri-macbook
+	# ./result/sw/bin/darwin-rebuild switch --flake nix/darwin#bri-macbook
