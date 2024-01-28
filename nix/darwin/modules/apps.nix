@@ -42,14 +42,15 @@
     # `brew install`
     # TODO Feel free to add your favorite apps here.
     brews = [
-      # "aria2"  # download tool
-      # "atuin"
-      # "bash"
-      # "bat"
+      "aria2"  # download tool
+      "atuin"
+      "bash"
+      "bat"
       # "ca-certificates"
-      # "direnv"
+      "direnv"
       # "gettext"
-      # "kubernetes-cli"
+      "just"
+      "kubernetes-cli"
       # "libgit2"
       # "libssh2"
       # "libtermkey"
@@ -59,7 +60,7 @@
       # "luv"
       # "mpdecimal"
       # "msgpack"
-      # "neovim"
+      "neovim"
       # "nixpacks"
       # "oniguruma"
       # "openssl@3"
@@ -67,10 +68,10 @@
       # "readline"
       # "six"
       # "sqlite"
-      # "starship"
-      # "stow"
-      # "thefuck"
-      # "tree-sitter"
+      "starship"
+      "stow"
+      "thefuck"
+      "tree-sitter"
       # "unibilium"
       # "xz"
     ];
@@ -81,6 +82,7 @@
       # "google-chrome"
       "1password-cli"
       "iterm2"
+      "discord"
     ];
   };
 }

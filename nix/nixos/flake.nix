@@ -13,10 +13,8 @@
 
     # Official NixOS package source, using nixos-23.11 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    
+    # Official NixOS package source, using unstable branch here
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    
 
     # home-manager, used for managing user configuration
     home-manager = {
@@ -32,11 +30,11 @@
   # `outputs` are all the build result of the flake.
   #
   # A flake can have many use cases and different types of outputs.
-  # 
+  #
   # parameters in function `outputs` are defined in `inputs` and
   # can be referenced by their names. However, `self` is an exception,
   # this special parameter points to the `outputs` itself(self-reference)
-  # 
+  #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
   outputs = { self, nixpkgs, unstable, home-manager, ... }@inputs: {
