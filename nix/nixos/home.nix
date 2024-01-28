@@ -4,7 +4,8 @@
   home.username = "bri";
   home.homeDirectory = "/home/bri";
   home.file.".local/share/fonts" = {
-    source = ../../fonts;
+    source = ./../../fonts;
+    #source = config.lib.file.mkOutOfStoreSymlink /home/bri/dev/nix-stuff/fonts;
     recursive = true; # link recursively
     executable = false; # make all files executable
   };

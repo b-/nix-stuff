@@ -171,7 +171,8 @@
       defaultFonts = {
         #serif = [ "Ubuntu" ];
         #sansSerif = [ "Ubuntu" ];
-        monospace = [ "PragmataPro Liga" ];
+        # monospace = [ "PragmataPro Liga" ];
+        monospace = [ "Berkeley Mono" ];
       };
     };
   };
