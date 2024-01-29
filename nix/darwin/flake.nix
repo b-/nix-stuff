@@ -20,21 +20,25 @@
   # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
-    # nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
+    # Package sets
+    # nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
+    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    nixpkgs-darwin.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
-      # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with
-      # the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs.
+      #url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
+
+    # Other sources
+    #comma = { url = github:nix-community/comma; flake = false; };
+    comma = { url = github:nix-community/comma; flake = true; };
+
   };
 
   # The `outputs` function will return all the build results of the flake.
@@ -59,9 +63,24 @@
         // {
           inherit username hostname;
         };
+      # Configuration for `nixpkgs`
+      nixpkgsConfig = {
+        config = { allowUnfree = true; };
+        #         overlays = attrValues self.overlays ++ singleton (
+        #           # Sub in x86 version of packages that don't build on Apple Silicon yet
+        #           final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+        #             inherit (final.pkgs-x86)
+        #               idris2
+        #               nix-index
+        #               niv
+        #               purescript;
+        #           })
+        #         );
+      };
     in
     {
-      darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
+      darwinConfigurations."${hostname}" = darwin.lib.darwinSystem rec {
+        # rec added
         inherit system specialArgs;
         modules = [
           ./modules/nix-core.nix
@@ -69,9 +88,37 @@
           ./modules/apps.nix
 
           ./modules/host-users.nix
+          # `home-manager` module
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            # `home-manager` config
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.bri = import ./modules/home.nix;
+          }
         ];
       };
       # nix code formatter
       formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
+
+  # Overlays --------------------------------------------------------------- {{{
+
+  # overlays = {
+  #   # Overlays to add various packages into package set
+  #   comma = final: prev: {
+  #     comma = import inputs.comma { inherit (prev) pkgs; };
+  #   };
+
+  #   ## Overlay useful on Macs with Apple Silicon
+  #   #apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+  #   #  # Add access to x86 packages system is running Apple Silicon
+  #   #  pkgs-x86 = import inputs.nixpkgs-unstable {
+  #   #    system = "x86_64-darwin";
+  #   #    inherit (nixpkgsConfig) config;
+  #   #  };
+  #   #};
+  # };
+
 }

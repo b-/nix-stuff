@@ -17,5 +17,8 @@
     description = username;
   };
 
-  nix.settings.trusted-users = [ username ];
+  nix.settings.trusted-users = [
+    username
+    "@admin"
+  ];
 }

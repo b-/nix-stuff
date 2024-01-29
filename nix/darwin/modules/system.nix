@@ -26,9 +26,16 @@
 
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
+  # Keyboard
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToEscape = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   # this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
+
+  programs.nix-index.enable = true;
+
+  services.nix-daemon.enable = true;
 
 }

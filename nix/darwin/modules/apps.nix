@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
 
   ##########################################################################
   #
@@ -6,7 +6,6 @@
   #
   #  NOTE: Your can find all available options in:
   #    https://daiderd.com/nix-darwin/manual/index.html
-  #
   #
   ##########################################################################
 
@@ -17,6 +16,7 @@
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
+    comma
     git
     rnix-lsp
   ];
@@ -47,6 +47,7 @@
       "bash"
       "bat"
       "direnv"
+      "golang"
       "just"
       "kubernetes-cli"
       "neovim"
@@ -65,6 +66,7 @@
       "google-chrome"
       "iterm2"
       "jetbrains-toolbox"
+      "karabiner-elements"
       "microsoft-office"
       "visual-studio-code"
     ];
@@ -78,4 +80,12 @@
       "TestFlight" = 899247664;
     };
   };
+  # Enable select unfree packages
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "1password"
+    "1password-cli"
+    "discord"
+    "google-chrome"
+    "vscode"
+  ];
 }
