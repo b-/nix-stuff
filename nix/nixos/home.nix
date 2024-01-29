@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, unstable, ... }:
 
 {
   home.username = "bri";
@@ -28,7 +28,7 @@
   # set cursor size and dpi for 4k monitor
   xresources.properties = {
     "Xcursor.size" = 16;
-    "Xft.dpi" = 172;
+    "Xft.dpi" = 96;
   };
 
   # Packages that should be installed to the user profile.
@@ -192,6 +192,7 @@
   # changes in each release.
   home.stateVersion = "23.11";
 
+  dconf.settings."org/gnome/desktop/wm/preferences".button-layout = "minimize,maximize,close";
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
