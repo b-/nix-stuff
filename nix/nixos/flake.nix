@@ -93,10 +93,8 @@
         #
         # specialArgs = {...};  # pass custom arguments into all sub module.
         modules = [
-          # Import the configuration.nix here, so that the
-          # old configuration file can still take effect.
-          # Note: configuration.nix itself is also a Nixpkgs Module,
           ./modules/configuration.nix
+          #./modules/cde.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

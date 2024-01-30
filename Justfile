@@ -12,7 +12,7 @@ stow-etc pkg:
 	sudo stow --target "/etc" "{{pkg}}"	
 
 nixos-rebuild:
-	sudo nixos-rebuild --flake 
+	sudo nixos-rebuild switch --flake {{nixos_flake}}
 
 darwin-deploy:
 	cd nix/darwin && make deploy
