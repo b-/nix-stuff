@@ -2,9 +2,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, options, unstable, ... }:
 
-{
+let
+  cde-icons = pkgs.writeShellScriptBin "cde-icons" ''
+    file=`basename ''${1%.*}`
+
+    ${pkgs.imagemagick}/bin/convert $1 -resize 48x48 ~/.dt/icons/$file.l.pm
+    ${pkgs.imagemagick}/bin/convert $1 -resize 32x32 ~/.dt/icons/$file.m.pm
+    ${pkgs.imagemagick}/bin/convert $1 -resize 24x24 ~/.dt/icons/$file.s.pm
+    ${pkgs.imagemagick}/bin/convert $1 -resize 16x16 ~/.dt/icons/$file.t.pm
+  '';
+  cde-battery = pkgs.writeScriptBin "cde-battery" ''
+    #!${pkgs.cdesktopenv}/opt/dt/bin/dtksh
+    ${pkgs.lib.readFile (pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/edorig/dtksh/5f49e402b391c81ebea9609bdec9c7716e70a8c0/battery";
+      sha256 = "0zjn9zl1as9xbk2845bbdy2xfj29b4hvvalcz8kf2llkndbfswvl";
+    })}
+  '';
+in {
   imports =
     [
       # Include the results of the hardware scan.
@@ -53,6 +69,15 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.displayManager.defaultSession = "plasmawayland";
   services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.cde.enable = true;
+  services.xserver.desktopManager.cde.extraPackages = with pkgs;
+    options.services.xserver.desktopManager.cde.extraPackages.default ++ [
+      fsv
+      cde-icons
+      #cde-gtk-theme
+      cde-battery
+    ];
+
 
   # Configure keymap in X11
   services.xserver = {
@@ -67,6 +92,9 @@
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  security.sudo.extraConfig = ''
+    Defaults pwfeedback
+  '';
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -103,6 +131,7 @@
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
+  programs.dconf.enable = true;
 
   # Enable select unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

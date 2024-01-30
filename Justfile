@@ -1,3 +1,6 @@
+nixos_flake := "./nix/nixos#chromebook-nixos"
+darwin_flake := "./nix/darwin#darwinConfigurations.bri-macbook.system"
+
 @list:
 	just --list
 
@@ -9,7 +12,7 @@ stow-etc pkg:
 	sudo stow --target "/etc" "{{pkg}}"	
 
 nixos-rebuild:
-	sudo nixos-rebuild switch
+	sudo nixos-rebuild --flake 
 
 darwin-deploy:
 	cd nix/darwin && make deploy

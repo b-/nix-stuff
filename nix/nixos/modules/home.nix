@@ -4,7 +4,7 @@
   home.username = "bri";
   home.homeDirectory = "/home/bri";
   home.file.".local/share/fonts" = {
-    source = ./../../fonts;
+    source = ./../../../fonts;
     #source = config.lib.file.mkOutOfStoreSymlink /home/bri/dev/nix-stuff/fonts;
     recursive = true; # link recursively
     executable = false; # make all files executable
@@ -91,6 +91,7 @@
     #
     # it provides the command `nom` works just like `nix`
     # with more details log output
+    rnix-lsp
     nix-output-monitor
     nixpkgs-fmt
 
@@ -113,6 +114,7 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+    dconf
   ];
 
   # basic configuration of git, please change to your own
