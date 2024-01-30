@@ -56,7 +56,6 @@
     let
       username = "bri";
       system = "x86_64-darwin"; # aarch64-darwin or x86_64-darwin
-
       hostname = "${username}-macbook";
       specialArgs =
         inputs
@@ -80,7 +79,6 @@
     in
     {
       darwinConfigurations."${hostname}" = darwin.lib.darwinSystem rec {
-        # rec added
         inherit system specialArgs;
         modules = [
           ./modules/nix-core.nix

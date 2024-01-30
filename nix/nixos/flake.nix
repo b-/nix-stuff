@@ -25,6 +25,8 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    comma = { url = github:nix-community/comma; flake = true; };
+
   };
 
   # `outputs` are all the build result of the flake.
@@ -37,21 +39,38 @@
   #
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, unstable, home-manager, ... }@inputs: {
-    nixosConfigurations = {
-      # By default, NixOS will try to refer the nixosConfiguration with
-      # its hostname, so the system named `nixos-test` will use this one.
-      # However, the configuration name can also be specified using:
-      #   sudo nixos-rebuild switch --flake /path/to/flakes/directory#<name>
-      #
-      # The `nixpkgs.lib.nixosSystem` function is used to build this
-      # configuration, the following attribute set is its parameter.
-      #
-      # Run the following command in the flake's directory to
-      # deploy this configuration on any NixOS system:
-      #   sudo nixos-rebuild switch --flake .#nixos-test
-      "chromebook-nixos" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+  outputs =
+    inputs @ { self
+    , nixpkgs
+    , unstable
+    , home-manager
+    , ...
+    }:
+    let
+      username = "bri";
+      system = "x86_64-linux";
+      hostname = "chromebook-nixos";
+      specialArgs =
+        inputs
+        // {
+          inherit username hostname;
+        };
+    in
+    {
+      nixosConfigurations."${hostname}" = nixpkgs.lib.nixosSystem rec {
+        # By default, NixOS will try to refer the nixosConfiguration with
+        # its hostname, so the system named `nixos-test` will use this one.
+        # However, the configuration name can also be specified using:
+        #   sudo nixos-rebuild switch --flake /path/to/flakes/directory#<name>
+        #
+        # The `nixpkgs.lib.nixosSystem` function is used to build this
+        # configuration, the following attribute set is its parameter.
+        #
+        # Run the following command in the flake's directory to
+        # deploy this configuration on any NixOS system:
+        #   sudo nixos-rebuild switch --flake .#nixos-test
+        inherit system specialArgs;
+        #system = "x86_64-linux";
 
         # The Nix module system can modularize configuration,
         # improving the maintainability of configuration.
@@ -94,18 +113,19 @@
         # specialArgs = {...};  # pass custom arguments into all sub module.
         modules = [
           ./modules/configuration.nix
+          ./modules/apps.nix
           #./modules/cde.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.bri = import ./modules/home.nix;
+            home-manager.users."${username}" = import ./modules/home.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
           }
         ];
       };
+      formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
-  };
 }
