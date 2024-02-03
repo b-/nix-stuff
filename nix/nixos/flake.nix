@@ -11,6 +11,10 @@
     # The most widely used is `github:owner/name/reference`,
     # which represents the GitHub repository URL + branch/commit-id/tag.
 
+    nix-software-center.url = "github:snowfallorg/nix-software-center";
+    nixos-conf-editor.url = "github:snowfallorg/nixos-conf-editor";
+
+
     # Official NixOS package source, using nixos-23.11 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     # Official NixOS package source, using unstable branch here
