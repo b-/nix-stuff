@@ -1,13 +1,13 @@
 { pkgs, ... }:
 
-  ###################################################################################
-  #
-  #  macOS's System configuration
-  #
-  #  All the configuration options are documented here:
-  #    https://daiderd.com/nix-darwin/manual/index.html#sec-options
-  #
-  ###################################################################################
+###################################################################################
+#
+#  macOS's System configuration
+#
+#  All the configuration options are documented here:
+#    https://daiderd.com/nix-darwin/manual/index.html#sec-options
+#
+###################################################################################
 {
 
   system = {
@@ -20,7 +20,7 @@
 
     defaults = {
       NSGlobalDomain.ApplePressAndHoldEnabled = false; # enable key repeat
-      menuExtraClock.Show24Hour = false;  # don't show 24 hour clock
+      menuExtraClock.Show24Hour = false; # don't show 24 hour clock
     };
   };
 

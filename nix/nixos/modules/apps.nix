@@ -3,6 +3,8 @@
 , pkgs
 , unstable
 , username
+, nix-software-center
+, nixos-conf-editor
 , ...
 }:
 
@@ -37,11 +39,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    "inputs.nixos-conf-editor.packages.${system}.nixos-conf-editor"
-    "inputs.nix-software-center.packages.${system}.nix-software-center"
+    #nixos-conf-editor.packages.${system}.nixos-conf-editor
+    #nix-software-center.packages.${system}.nix-software-center
 
+    deploy-rs
     git
     just
+    ncdu
     neovim
     stow
     vim

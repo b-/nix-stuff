@@ -91,7 +91,10 @@
     #
     # it provides the command `nom` works just like `nix`
     # with more details log output
+    alejandra
+    comma
     rnix-lsp
+    nix-index
     nix-output-monitor
     nixpkgs-fmt
 

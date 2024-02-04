@@ -44,10 +44,13 @@
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
   outputs =
-    inputs @ { self
+    inputs @
+    { self
     , nixpkgs
     , unstable
     , home-manager
+    , nix-software-center
+    , nixos-conf-editor
     , ...
     }:
     let

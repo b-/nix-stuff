@@ -1,4 +1,10 @@
-{ config, pkgs, lib, options, unstable, ... }:
+{ config
+, pkgs
+, lib
+, options
+, unstable
+, ...
+}:
 
 let
   cde-icons = pkgs.writeShellScriptBin "cde-icons" ''
@@ -16,13 +22,14 @@ let
       sha256 = "0zjn9zl1as9xbk2845bbdy2xfj29b4hvvalcz8kf2llkndbfswvl";
     })}
   '';
-in {
+in
+{
   services.xserver.desktopManager.cde.enable = true;
   services.xserver.desktopManager.cde.extraPackages = with pkgs;
     options.services.xserver.desktopManager.cde.extraPackages.default ++ [
       fsv
       cde-icons
-      #cde-gtk-theme
+      #cde-gtk-theme # not working
       cde-battery
     ];
 
