@@ -9,10 +9,24 @@
 }:
 
 {
-  programs.zsh.enable = true;
-  programs.fish.enable = true;
+  programs = {
+  zsh.enable = true;
+  fish.enable = true;
 
-  programs.dconf.enable = true;
+  dconf.enable = true;
+
+  _1password.enable = true;
+  _1password-gui = {
+    enable = true;
+    package = pkgs._1password-gui-beta;
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
+    polkitPolicyOwners = [ "${username}" ];
+  };
+
+  # mtr traceroute
+  mtr.enable = true;
+  };
 
   # Enable select unfree packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
@@ -24,14 +38,6 @@
   ];
 
 
-  programs._1password.enable = true;
-  programs._1password-gui = {
-    enable = true;
-    package = pkgs._1password-gui-beta;
-    # Certain features, including CLI integration and system authentication support,
-    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
-    polkitPolicyOwners = [ "${username}" ];
-  };
 
   ###
   ####PACKAGES####
@@ -47,12 +53,22 @@
     just
     ncdu
     neovim
+    rnix-lsp
     stow
     vim
     wget
   ];
 
+  #### user pkgs ####
+  users.users."${username}".packages = with pkgs; [
+    firefox
+    kate
+    tor-browser-bundle-bin
+    vscode
+    #  thunderbird
+  ];
+
+
   services.tailscale.enable = true;
-  programs.mtr.enable = true;
 
 }

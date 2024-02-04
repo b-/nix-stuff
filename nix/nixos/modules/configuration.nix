@@ -96,20 +96,11 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.bri = {
+  users.users."${username}" = {
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "bri";
     extraGroups = [ "networkmanager" "wheel" ];
-    ###
-    #### user pkgs ####
-    ###
-    packages = with pkgs; [
-      firefox
-      kate
-      vscode
-      #  thunderbird
-    ];
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
