@@ -36,19 +36,37 @@
     nodejs
     purescript
 
+    starship
+
     # Useful nix related tools
     cachix # adding/managing alternative binary caches hosted by Cachix
     # comma # run software from without installing it
     niv # easy dependency management for nix projects
     nodePackages.node2nix
+    nix-direnv
+
+
+    # virt-viewer
 
   ] ++ lib.optionals stdenv.isDarwin [
     cocoapods
     m-cli # useful macOS CLI commands
+    inetutils
   ];
 
   # Misc configuration files --------------------------------------------------------------------{{{
 
+  # starship - a customizable prompt for any shell
+  programs.starship = {
+    enable = true;
+    # custom settings
+    settings = {
+      add_newline = false;
+      aws.disabled = true;
+      gcloud.disabled = true;
+      line_break.disabled = true;
+    };
+  };
   # https://docs.haskellstack.org/en/stable/yaml_configuration/#non-project-specific-config
   home.file.".stack/config.yaml".text = lib.generators.toYAML {} {
     templates = {
